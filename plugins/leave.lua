@@ -26,7 +26,7 @@ end
  
 return {
   patterns = {
-    "^(‌‌LEAVE)$",
+    "^(LEAVE)$",
         "^(leave)$",
     "^!!tgservice (.+)$",
   },

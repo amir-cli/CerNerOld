@@ -217,6 +217,7 @@ function create_config( )
     "Manager",
     "plugins",
     "inrealm",
+			"saveplug",
 	"msg_checks"
     },
     sudo_users = {292596590},--Sudo users    

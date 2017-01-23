@@ -112,7 +112,7 @@ else
   fi
   while true; do
    rm -r ../.telegram-cli/state
-   ./tg/bin/telegram-cli -b ./tg/tg-server.pub -s ./CerNer/cerner-bot.lua -l 1 -E $@
+   ./tg/bin/telegram-cli -b ./tg/tg-server.pub -s ./Home/cerner-bot.lua -l 1 -E $@
    sleep 3
   done
 fi

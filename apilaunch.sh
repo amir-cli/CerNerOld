@@ -77,7 +77,7 @@ install_rocks() {
 install() {
   git pull
   git submodule update --init --recursive
-  patch -i "CerNer/disable-python-and-libjansson.patch" -p 0 --batch --forward
+  patch -i "Home/disable-python-and-libjansson.patch" -p 0 --batch --forward
   RET=$?;
 
   cd tg

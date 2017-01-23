@@ -1835,7 +1835,7 @@ local function run(msg, matches)
 		end
 
 		if msg.text then
-			if msg.text:match("^(https://t.me/joinchat/%S+)$") or if msg.text:match("^(https://telegram.me/joinchat/%S+)$")  and data[tostring(msg.to.id)]['settings']['set_link'] == 'waiting' and is_owner(msg) then
+			if msg.text:match("^(https://t.me/joinchat/%S+)$") or msg.text:match("^(https://telegram.me/joinchat/%S+)$")  and data[tostring(msg.to.id)]['settings']['set_link'] == 'waiting' and is_owner(msg) then
 				data[tostring(msg.to.id)]['settings']['set_link'] = msg.text
 				save_data(_config.moderation.data, data)
 				return "<b>New link set</b>"

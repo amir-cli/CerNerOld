@@ -1598,7 +1598,7 @@ local function run(msg, matches)
 	local print_name = user_print_name(msg.from):gsub("‮", "")
 	local name_log = print_name:gsub("_", " ")
 	local data = load_data(_config.moderation.data)
-		if matches[1] == افزودن and not matches[2] then
+		if matches[1] == 'افزودن' and not matches[2] then
 			if not is_admin1(msg) and not is_support(support_id) then
 				return
 			end

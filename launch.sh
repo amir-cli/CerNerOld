@@ -77,7 +77,7 @@ install_rocks() {
 install() {
   git pull
   git submodule update --init --recursive
-  patch -i "patches/disable-python-and-libjansson.patch" -p 0 --batch --forward
+  patch -i "Home/disable-python-and-libjansson.patch" -p 0 --batch --forward
   RET=$?;
 
   cd tg
@@ -112,7 +112,7 @@ else
   fi
   while true; do
    rm -r ../.telegram-cli/state
-   ./tg/bin/telegram-cli -k ./tg/tg-server.pub -s ./bot/CerNer.lua -l 1 -E $@
+   ./tg/bin/telegram-cli -k ./tg/tg-server.pub -s ./Home/cerner-bot.lua -l 1 -E $@
    sleep 3
   done
 fi

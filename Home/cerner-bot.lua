@@ -217,7 +217,7 @@ function create_config( )
     "Manager",
     "plugins",
     "inrealm",
-			"Banhammer",
+			"BanHammer",
 			"saveplug",
 "saveplug",
 "sendplug",

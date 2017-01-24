@@ -212,11 +212,12 @@ function create_config( )
   -- A simple config with basic plugins and ourselves as privileged user
   config = {
     enabled_plugins = {
-	"admin",
+	"Admin",
     "all",
     "Manager",
     "plugins",
     "inrealm",
+			"Banhammer",
 			"saveplug",
 "saveplug",
 "sendplug",

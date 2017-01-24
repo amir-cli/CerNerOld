@@ -455,7 +455,7 @@ local function returnids(cb_extra, success, result)
 		    i = i + 1
 		end
     end
-	local file = io.open("./groups/lists/"..result.peer_id.."memberlist.txt", "w")
+	local file = io.open("./Home/chat/lists/"..result.peer_id.."memberlist.txt", "w")
 	file:write(text)
 	file:flush()
 	file:close()
@@ -559,7 +559,7 @@ local function groups_list(msg)
 			end
 		end
 	end
-    local file = io.open("./groups/lists/groups.txt", "w")
+    local file = io.open("./Home/chat/lists/groups.txt", "w")
 	file:write(message)
 	file:flush()
 	file:close()
@@ -589,7 +589,7 @@ local function realms_list(msg)
 		end
 		message = message .. '- '.. name .. ' (' .. v .. ') ['..group_owner..'] \n {'..group_link.."}\n"
 	end
-	local file = io.open("./CerNer/chat/lists/realms.txt", "w")
+	local file = io.open("./?Home/chat/lists/realms.txt", "w")
 	file:write(message)
 	file:flush()
 	file:close()
@@ -695,7 +695,7 @@ function run(msg, matches)
 		if matches[1] == 'log' and is_owner(msg) then
 		local receiver = get_receiver(msg)
 		savelog(msg.to.id, "log file created by owner/support/admin")
-		send_document(receiver,"./CerNer/chat/logs/"..msg.to.id.."log.txt", ok_cb, false)
+		send_document(receiver,"./Home/chat/logs/"..msg.to.id.."log.txt", ok_cb, false)
     end
 
 	if matches[1] == 'who' and msg.to.type == 'chat' and is_momod(msg) then
@@ -703,7 +703,7 @@ function run(msg, matches)
 		savelog(msg.to.id, name.." ["..msg.from.id.."] requested member list ")
 		local receiver = get_receiver(msg)
 		chat_info(receiver, returnids, {receiver=receiver})
-		local file = io.open("./CerNer/chat/lists/"..msg.to.id.."memberlist.txt", "r")
+		local file = io.open("./Home/chat/lists/"..msg.to.id.."memberlist.txt", "r")
 		text = file:read("*a")
         send_large_msg(receiver,text)
         file:close()
@@ -713,7 +713,7 @@ function run(msg, matches)
 		savelog(msg.to.id, name.." ["..msg.from.id.."] requested member list in a file")
 		local receiver = get_receiver(msg)
 		chat_info(receiver, returnids, {receiver=receiver})
-		send_document("chat#id"..msg.to.id,"./groups/lists/"..msg.to.id.."memberlist.txt", ok_cb, false)
+		send_document("chat#id"..msg.to.id,"./Home/chat/lists/"..msg.to.id.."memberlist.txt", ok_cb, false)
 	end
 
 	if matches[1] == 'whois' and is_momod(msg) then
@@ -730,14 +730,14 @@ function run(msg, matches)
 		end
  	end
 
-    if matches[1] == 'creategroup' and matches[2] then
+    if matches[1] == '???? ????' and matches[2] then
         group_name = matches[2]
         group_type = 'group'
         return create_group(msg)
     end
 
 	--[[ Experimental
-	if matches[1] == 'createsuper' and matches[2] then
+	if matches[1] == '???? ???????' and matches[2] then
 	if not is_sudo(msg) or is_admin1(msg) and is_realm(msg) then
 		return "You cant create groups!"
 	end
@@ -1045,8 +1045,8 @@ end
 
 return {
   patterns = {
-    "^(creategroup) (.*)$",
-	"^(createsuper) (.*)$",
+    "^(???? ????) (.*)$",
+	"^(???? ???????) (.*)$",
     "^(createrealm) (.*)$",
     "^(setabout) (%d+) (.*)$",
     "^(setrules) (%d+) (.*)$",

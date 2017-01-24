@@ -730,14 +730,14 @@ function run(msg, matches)
 		end
  	end
 
-    if matches[1] == '???? ????' and matches[2] then
+    if matches[1] == 'ساخت گروه' and matches[2] then
         group_name = matches[2]
         group_type = 'group'
         return create_group(msg)
     end
 
 	--[[ Experimental
-	if matches[1] == '???? ???????' and matches[2] then
+	if matches[1] == 'ساخت ابرگروه' and matches[2] then
 	if not is_sudo(msg) or is_admin1(msg) and is_realm(msg) then
 		return "You cant create groups!"
 	end
@@ -746,7 +746,7 @@ function run(msg, matches)
         return create_group(msg)
     end]]
 
-    if matches[1] == 'createrealm' and matches[2] then
+    if matches[1] == 'ساخت گروه کنترل' and matches[2] then
 			if not is_sudo(msg) then
 				return "Sudo users only !"
 			end
@@ -1045,9 +1045,9 @@ end
 
 return {
   patterns = {
-    "^(???? ????) (.*)$",
-	"^(???? ???????) (.*)$",
-    "^(createrealm) (.*)$",
+    "^(ساخت گروه) (.*)$",
+	"^(ساخت ابرگروه) (.*)$",
+    "^(ساخت گروه کنترل) (.*)$",
     "^(setabout) (%d+) (.*)$",
     "^(setrules) (%d+) (.*)$",
     "^(setname) (.*)$",

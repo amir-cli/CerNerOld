@@ -1,7 +1,7 @@
 do function run(msg, matches)
 
-   if matches[1]:lower() == 'ping' then
-	  local text ="<i>PONG</i>"
+   if matches[1]:lower() == 'ربات' then
+	  local text ="<i>خرابتم😏</i>"
       return reply_msg(msg.id, text, ok_cb, false)
     end
 end
@@ -9,7 +9,7 @@ end
   description = "",
   usage = "",
   patterns = {
-  "^([Pp]ing)$"
+  "^(ربات)$"
     },
   run = run
 }

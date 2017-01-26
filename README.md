@@ -2,9 +2,11 @@
 Old TG
 
 [mr.amirbagheri](https://telegram.me/mrcliapi)
+
 [channel](https://telegram.me/CerNerCH)
 
 [install](#install)
+
 [installapi](#apiRun)
 #install 
 
@@ -22,7 +24,6 @@ chmod +x cernercli.sh
 ./cernercli.sh # add phone
 ```
 
-install bot api#
 #Run Api Telegram bot
 #apiRun
 ```sh

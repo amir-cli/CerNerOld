@@ -5,10 +5,10 @@ By @mrcliapi
 do
 
 local function run(msg, matches)
-  if matches[1] == '??' then
+  if matches[1] == 'me' then
     if is_sudo(msg) then
     send_document(get_receiver(msg), "./data/me/sudo.webp", ok_cb, false)
-      return "<code>???? ????</code>"
+      return "<code>Sudo BOT</code>"
     elseif is_admin1(msg) then
     send_document(get_receiver(msg), "./data/me/admin.webp", ok_cb, false)
       return "<i>YoU Admin</i>"
@@ -27,8 +27,7 @@ end
 
 return {
   patterns = {
-    "^(??)$",
-    "^(??)$"
+    "^([Mm]e)$",
     },
   run = run
 }

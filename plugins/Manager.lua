@@ -1528,7 +1528,7 @@ elseif get_cmd == "ادمین" then
 				if result.username then
 					text = member_username.." ["..v.peer_id.."] added as owner"
 				else
-					text = "["..v.peer_id.."] <code>added as owner</code>"
+					text = "["..v.peer_id.."] <code>صاحب گروه شد</code>"
 				end
 			end
 		elseif memberid and vusername ~= member and vpeer_id ~= memberid then
@@ -1603,7 +1603,7 @@ local function run(msg, matches)
 				return
 			end
 			if is_super_group(msg) then
-				return reply_msg(msg.id, 'SuperGroup is already added.', ok_cb, false)
+				return reply_msg(msg.id, 'گروه مجددا به لیست مدیریت اضافه شد.', ok_cb, false)
 			end
 			print("SuperGroup "..msg.to.print_name.."("..msg.to.id..") added")
 			savelog(msg.to.id, name_log.." ["..msg.from.id.."] added SuperGroup")
@@ -1614,7 +1614,7 @@ local function run(msg, matches)
 
 		if matches[1] == 'حذف شو' and is_admin1(msg) and not matches[2] then
 			if not is_super_group(msg) then
-				return reply_msg(msg.id, 'SuperGroup is not added.', ok_cb, false)
+				return reply_msg(msg.id, 'سوپرگپ از قبل اضافه نشده', ok_cb, false)
 			end
 			print("SuperGroup "..msg.to.print_name.."("..msg.to.id..") removed")
 			superrem(msg)
@@ -1662,7 +1662,7 @@ local function run(msg, matches)
 			channel_get_bots(receiver, callback, {receiver = receiver, msg = msg, member_type = member_type})
 		end
 
-		if matches[1] == "who" and not matches[2] and is_momod(msg) then
+		if matches[1] == "لیست افرادگروه" and not matches[2] and is_momod(msg) then
 			local user_id = msg.from.peer_id
 			savelog(msg.to.id, name_log.." ["..msg.from.id.."] requested SuperGroup users list")
 			channel_get_users(receiver, callback_who, {receiver = receiver})
@@ -1793,7 +1793,7 @@ local function run(msg, matches)
 			end
 			local group_link = data[tostring(msg.to.id)]['settings']['set_link']
 			if not group_link then
-				return "<code>لینک وجود ندارد برای ساخت لینک از دستور #ایجاد لینک استفاده کنید و برای ثبت لینک از دستور #ثبت لینک استفاده کنید</code>"
+				return "<code>لینک گروه موجود نیست لطفا از دستور تنظیم لینک /ساخت لینک استفاده کنید"‌</code>
 			end
 			savelog(msg.to.id, name_log.." ["..msg.from.id.."] requested group link ["..group_link.."]")
 			return "<code>Channel Team</code> @CerNerCH \n<code>لینک گروه</code>:\n"..group_link
@@ -2667,7 +2667,7 @@ return {
 	"^(صاحب گروه)$",
 	"^(مدیران)$",
 	"^(ربات ها)$",
-	"^([Ww]ho)$",
+	"^(لیست افرادگروه)$",
 	"(اخراج شده ها)$",
         "(بلوک) (.*)",
 	"^(بلوک)",
@@ -2696,6 +2696,7 @@ return {
 	"^(تنظیم عکس)$",
 	"^(تنظیم یوزرنیم) (.*)$",
 	"^(پاک)$",
+	"^(درباره)$",
 	"^(قفل) (.*)$",
 	"^(بازکردن) (.*)$",
 	"^(mute) ([^%s]+)$",

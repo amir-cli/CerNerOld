@@ -1793,7 +1793,7 @@ local function run(msg, matches)
 			end
 			local group_link = data[tostring(msg.to.id)]['settings']['set_link']
 			if not group_link then
-				return "<code>لینک گروه موجود نیست لطفا از دستور تنظیم لینک /ساخت لینک استفاده کنید"‌</code>
+				return "<code>لینک گروه موجود نیست لطفا از دستور تنظیم لینک /ساخت لینک استفاده کنید</code>"
 			end
 			savelog(msg.to.id, name_log.." ["..msg.from.id.."] requested group link ["..group_link.."]")
 			return "<code>Channel Team</code> @CerNerCH \n<code>لینک گروه</code>:\n"..group_link

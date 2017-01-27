@@ -2593,7 +2593,7 @@ local function run(msg, matches)
 		end
 
 		if matches[1] == 'راهنما' and is_momod(msg) then
-                         text = "راهنما\nTelegram.me/HelpCerNer/3"
+                         text = "راهنما\nTelegram.me/HelpCerNer/4"
 			reply_msg(msg.id, text, ok_cb, false)
 		elseif matches[1] == 'راهنما' and not is_momod (msg) then
                          text = " راهنمایی برای چس ممبر وجود ندارد "

@@ -1,65 +1,4 @@
 #!/bin/bash
-# =====================================================================================================
-# Copyright (C) steady.sh v1.2 2016 iicc (@iicc1)
-# =====================================================================================================
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
-# this program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-# GNU General Public License for more details.
-# You should have received a copy of the GNU General Public License along with this program.  If not, see <http://www.gnu.org/licenses/>.
-# =======================================================================================================
-# It depends on Tmux https://github.com/tmux/tmux which is BSD-licensed
-# and Screen https://www.gnu.org/software/screen GNU-licensed.
-# =======================================================================================================
-# This script is intended to control the state of a telegram-cli telegram bot running in background.
-# The idea is to get the bot fully operative all the time without any supervision by the user.
-# It should be able to recover the telegram bot in any case telegram-cli crashes, freezes or whatever.
-# This script works by tracing ctxt swithes value in kernel procces at a $RELOADTIME 
-# So it can detect any kind of kernel interruption with the procces and reload the bot.
-#
-#--------------------------------------------------
-#--    ▒▒▒▒▒▒▒▒▒                                --
-#--    ▒▒█████▒▒                                --
-#--    ▒█▒▒▒▒▒█▒                                --
-#--    ▒█▒▒▒▒▒█▒                                --
-#--    ▒█▒█▒▒▒█▒                                --
-#--    ▒▒██▒▒█▒▒                                --
-#--    ▒▒▒▒▒▒▒▒▒                                --
-#--    ▒███████▒                                --
-#--    ▒▒▒▒█▒▒█▒                                --
-#--    ▒▒▒▒█▒▒█▒                                --
-#--    ▒▒▒▒█▒▒█▒                                --
-#--    ▒▒▒▒▒██▒▒                                --
-#--    ▒▒▒▒▒▒▒▒▒                                --
-#--    ▒███████▒                                --
-#--    ▒▒▒▒▒▒█▒▒                                --
-#--    ▒▒▒▒██▒▒▒                                --
-#--    ▒▒▒▒▒▒█▒▒                                --
-#--    ▒███████▒                                --
-#--    ▒▒▒▒▒▒▒▒▒                                --
-#--    ▒▒█████▒▒                                --
-#--    ▒█▒▒▒▒▒█▒                                --
-#--    ▒█▒▒▒▒▒█▒                                --
-#--    ▒█▒▒▒▒▒█▒                                --
-#--    ▒▒█████▒▒                                --
-#--    ▒▒▒▒▒▒▒▒▒                                --
-#--    ▒███████▒                                --
-#--    ▒█▒▒▒▒▒█▒                                --
-#--    ▒█▒▒▒▒▒█▒                                --
-#--    ▒█▒▒▒▒▒█▒                                --
-#--    ▒▒█████▒▒                                --
-#--    ▒▒▒▒▒▒▒▒▒                                --                
-#--                                              --                   
-#--------------------------------------------------
-#--                                              --
-#--       Developers: @CRUEL                     --
-#--                                              --
-#--                                              --
-#--------------------------------------------------
-
 
 # Some script variables
 OK=0
@@ -69,8 +8,9 @@ NONVOLUNTARYCHECK=0
 VOLUNTARY=1
 VOLUNTARYCHECK=0
 I=1
-BOT=CerNerOld # You can put here other bots. Also you can change it to run more than one bot in the same server.
+BOT=CerNerOld  # You can put here other bots. Also you can change it to run more than one bot in the same server.
 RELOADTIME=10  # Time between checking cpu calls of the cli process. Set the value high if your bot does not receive lots of messages.
+LAUNCHER=cernercli.sh
 
 
 function tmux_mode {
@@ -95,14 +35,15 @@ cat << EOF
  $f1▀ ▀▄▄ ▄▄▀ ▀   $f2 ▀█▄ ▀▀ ▄█▀    $f3▀▄    ▄▀   $f4▀ ▀▄▄ ▄▄▀ ▀   $f5 ▀█▄ ▀▀ ▄█▀    $f6▀▄    ▄▀$rst
  
 EOF
-echo -e "                \e[100m                Steady script           \e[00;37;40m"
-echo -e "               \e[01;34m                    by CRUEL M.KH                 \e[00;37;40m"
+echo -e "                \e[100m                Steady script          \e[00;37;40m"
+echo -e "\033[38;5;208m            AmirCli     \033[0;00m"
 echo ""
 cat << EOF
  $bld$f1▄ ▀▄   ▄▀ ▄   $f2 ▄▄▄████▄▄▄    $f3  ▄██▄     $f4▄ ▀▄   ▄▀ ▄   $f5 ▄▄▄████▄▄▄    $f6  ▄██▄  $rst
  $bld$f1█▄█▀███▀█▄█   $f2███▀▀██▀▀███   $f3▄█▀██▀█▄   $f4█▄█▀███▀█▄█   $f5███▀▀██▀▀███   $f6▄█▀██▀█▄$rst
  $bld$f1▀█████████▀   $f2▀▀▀██▀▀██▀▀▀   $f3▀▀█▀▀█▀▀   $f4▀█████████▀   $f5▀▀▀██▀▀██▀▀▀   $f6▀▀█▀▀█▀▀$rst
  $bld$f1 ▄▀     ▀▄    $f2▄▄▀▀ ▀▀ ▀▀▄▄   $f3▄▀▄▀▀▄▀▄   $f4 ▄▀     ▀▄    $f5▄▄▀▀ ▀▀ ▀▀▄▄   $f6▄▀▄▀▀▄▀▄$rst
+
 
 EOF
 
@@ -122,11 +63,7 @@ sleep 0.5
 
 
 echo ""
-echo -e "\033[38;5;208m @GPMod    :)      @cruel_channel \033[0;00m"
-echo -e "\033[38;5;208m @GPMod    :)      @cruel_channel \033[0;00m"
-echo -e "\033[38;5;208m @GPMod    :)      @cruel_channel \033[0;00m"
-echo -e "\033[38;5;208m @GPMod    :)      @cruel_channel \033[0;00m"
-echo -e "\033[38;5;208m @GPMod    :)      @cruel_channel \033[0;00m"
+echo -e "\033[38;5;208m            CerNerTeam      \033[0;00m"
 
 sleep 1.5
 echo -e "$bld$f4 CHECKING PROCESSES...$rst"
@@ -144,7 +81,7 @@ echo -e "$bld$f4 ATTACHING TMUX AS DAEMON...$rst"
 # It is recommended to clear cli status always before starting the bot
 rm ../.telegram-cli/state  > /dev/null 
 # Nested TMUX sessions trick 
-TMUX= tmux new-session -d -s $BOT "./launch.sh"
+TMUX= tmux new-session -d -s $BOT "./$LAUNCHER"
 sleep 1.3
 
 CLIPID=`ps -e | grep telegram-cli | head -1 | sed 's/^[[:space:]]*//' | cut -f 1 -d" "`
@@ -200,7 +137,7 @@ while true; do
 		kill $CLIPID
 		tmux kill-session -t $BOT
 	
-		TMUX= tmux new-session -d -s $BOT "./launch.sh"
+		TMUX= tmux new-session -d -s $BOT "./$LAUNCHER"
 		sleep 1
 		
 		CLIPID=`ps -e | grep telegram-cli | head -1 | sed 's/^[[:space:]]*//' | cut -f 1 -d" "`
@@ -247,14 +184,15 @@ cat << EOF
  $f1▀ ▀▄▄ ▄▄▀ ▀   $f2 ▀█▄ ▀▀ ▄█▀    $f3▀▄    ▄▀   $f4▀ ▀▄▄ ▄▄▀ ▀   $f5 ▀█▄ ▀▀ ▄█▀    $f6▀▄    ▄▀$rst
  
 EOF
-echo -e "                \e[100m                Steady script           \e[00;37;40m"
-echo -e "               \e[01;34m                    by CRUEL M.KH                 \e[00;37;40m"
+echo -e "                \e[100m                Steady script          \e[00;37;40m"
+echo -e "\033[38;5;208m            CerNerTeam      \033[0;00m"
 echo ""
 cat << EOF
  $bld$f1▄ ▀▄   ▄▀ ▄   $f2 ▄▄▄████▄▄▄    $f3  ▄██▄     $f4▄ ▀▄   ▄▀ ▄   $f5 ▄▄▄████▄▄▄    $f6  ▄██▄  $rst
  $bld$f1█▄█▀███▀█▄█   $f2███▀▀██▀▀███   $f3▄█▀██▀█▄   $f4█▄█▀███▀█▄█   $f5███▀▀██▀▀███   $f6▄█▀██▀█▄$rst
  $bld$f1▀█████████▀   $f2▀▀▀██▀▀██▀▀▀   $f3▀▀█▀▀█▀▀   $f4▀█████████▀   $f5▀▀▀██▀▀██▀▀▀   $f6▀▀█▀▀█▀▀$rst
  $bld$f1 ▄▀     ▀▄    $f2▄▄▀▀ ▀▀ ▀▀▄▄   $f3▄▀▄▀▀▄▀▄   $f4 ▄▀     ▀▄    $f5▄▄▀▀ ▀▀ ▀▀▄▄   $f6▄▀▄▀▀▄▀▄$rst
+
 
 EOF
 
@@ -274,11 +212,7 @@ sleep 0.5
 
 
 echo ""
-echo -e "\033[38;5;208m @GPMod    :)      @cruel_channel \033[0;00m"
-echo -e "\033[38;5;208m @GPMod    :)      @cruel_channel \033[0;00m"
-echo -e "\033[38;5;208m @GPMod    :)      @cruel_channel \033[0;00m"
-echo -e "\033[38;5;208m @GPMod    :)      @cruel_channel \033[0;00m"
-echo -e "\033[38;5;208m @GPMod    :)      @cruel_channel \033[0;00m"
+echo -e "\033[38;5;208m            CerNerTeam      \033[0;00m"
 # Starting preliminar setup
 sleep 1.5
 echo -e "$bld$f4 CHECKING PROCESSES...$rst"
@@ -348,7 +282,7 @@ sleep 1
 echo -e "$bld$f4 ATTACHING SCREEN AS DAEMON...$rst"
 # Better to clear cli status before
 rm ../.telegram-cli/state  > /dev/null 
-screen -d -m bash launch.sh
+screen -d -m bash $LAUNCHER
 
 sleep 1.3
 
@@ -407,7 +341,7 @@ sleep 5
 	#echo -e "NONVOLUNTARY CTXT SWITCHES: $NONVOLUNTARY"
 	
 	if [ $NONVOLUNTARY != $NONVOLUNTARYCHECK ] || [ $VOLUNTARY != $VOLUNTARYCHECK ]; then
-		echo -e "$f5 BOT RUNNING!$rst"
+		echo -e "$f5 BOT LAUNCHED ヅ!$rst"
 		OK=$(( $OK + 1 ))
 
 	else
@@ -420,7 +354,7 @@ sleep 5
 		kill $CLIPID
 		kill $SCREEN
 		
-		screen -d -m bash launch.sh
+		screen -d -m bash $LAUNCHER
 		sleep 1
 		
 		CLIPID=`ps -e | grep telegram-cli | sed 's/^[[:space:]]*//' | cut -f 1 -d" "`
@@ -470,7 +404,7 @@ exit 1
 
 function screen_detached {
 clear
-screen -d -m bash launch.sh
+screen -d -m bash $LAUNCHER
 echo -e "\e[1m"
 echo -e ""
 echo "Bot running in the backgroud with SCREEN"
@@ -540,15 +474,11 @@ while getopts ":tsTSih" opt; do
 	i)
 	echo -e "\e[1m"
 	echo -e ""
-	echo "steady.sh bash script v1 CRUEL 2016 GPMOD" >&2
+	echo "steady.sh bash script v3 CerNerTeam" >&2
 	echo ""
 	echo -e "\e[0m"
 
-echo -e "\033[38;5;208m @GPMod    :)      @cruel_channel \033[0;00m"
-echo -e "\033[38;5;208m @GPMod    :)      @cruel_channel \033[0;00m"
-echo -e "\033[38;5;208m @GPMod    :)      @cruel_channel \033[0;00m"
-echo -e "\033[38;5;208m @GPMod    :)      @cruel_channel \033[0;00m"
-echo -e "\033[38;5;208m @GPMod    :)      @cruel_channel \033[0;00m"
+echo -e "\033[38;5;208m            CerNerTeam      \033[0;00m"
 echo ""
 	exit 1
       ;;

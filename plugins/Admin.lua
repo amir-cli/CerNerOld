@@ -6,11 +6,11 @@ local function set_bot_photo(msg, success, result)
     os.rename(result, file)
     print('File moved to:', file)
     set_profile_photo(file, ok_cb, false)
-    send_large_msg(receiver, 'Photo changed!', ok_cb, false)
+    send_large_msg(receiver, 'عکس ربات تغیی کرد!', ok_cb, false)
     redis:del("bot:photo")
   else
     print('Error downloading: '..msg.id)
-    send_large_msg(receiver, 'Failed, please try again!', ok_cb, false)
+    send_large_msg(receiver, 'خطا.لطفا مجددا امتحان کنید!', ok_cb, false)
   end
 end
 
@@ -165,9 +165,9 @@ local function run(msg,matches)
       		end
       	end
     end
-    if matches[1] == "setbotphoto" then
+    if matches[1] == "تنظیم عکس ربات" then
     	redis:set("bot:photo", "waiting")
-    	return 'Please send me bot photo now'
+    	return 'لطفا عکس جدید ربات را امتحان کنید!'
     end
     if matches[1] == "markread" then
     	if matches[2] == "on" then
@@ -258,10 +258,10 @@ end
       		print(k, v.." Globally banned")
     	end
     end
-	if matches[1] == 'reload' then
+	if matches[1] == 'بارگذاری' then
 		receiver = get_receiver(msg)
 		reload_plugins(true)
-		post_msg(receiver, "CerNer Reloaded", ok_cb, false)
+		post_msg(receiver, "باز یابی مجدد انجام شد", ok_cb, false)
 		return "<b>Reloaded!</b>"
 	end
 	--[[*For Debug*
@@ -312,14 +312,14 @@ return {
 	"^(pmblock) (%d+)$",
 	"^(markread) (on)$",
 	"^(markread) (off)$",
-	"^(setbotphoto)$",
+	"^(تنظیم عکس ربات)$",
 	"^(contactlist)$",
 	"^(dialoglist)$",
 	"^(delcontact) (%d+)$",
 	"^(addcontact) (.*) (.*) (.*)$", 
 	"^(sendcontact) (.*) (.*) (.*)$",
 	"^(mycontact)$",
-	"^(reload)$",
+	"^(بازیابی)$",
 	"^(updateid)$",
 	"^(sync_gbans)$",
 	"^(addlog)$",

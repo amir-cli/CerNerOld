@@ -6,7 +6,7 @@ local function set_bot_photo(msg, success, result)
     os.rename(result, file)
     print('File moved to:', file)
     set_profile_photo(file, ok_cb, false)
-    send_large_msg(receiver, 'عکس ربات تغیی کرد!', ok_cb, false)
+    send_large_msg(receiver, 'عکس ربات تغییر کرد!', ok_cb, false)
     redis:del("bot:photo")
   else
     print('Error downloading: '..msg.id)
@@ -258,7 +258,7 @@ end
       		print(k, v.." Globally banned")
     	end
     end
-	if matches[1] == 'بارگذاری' then
+	if matches[1] == 'بازیابی' then
 		receiver = get_receiver(msg)
 		reload_plugins(true)
 		post_msg(receiver, "باز یابی مجدد انجام شد", ok_cb, false)

@@ -167,7 +167,7 @@ local function run(msg,matches)
     end
     if matches[1] == "تنظیم عکس ربات" then
     	redis:set("bot:photo", "waiting")
-    	return 'لطفا عکس جدید ربات را امتحان کنید!'
+    	return 'لطفا عکس جدید را ارسال کنید!'
     end
     if matches[1] == "markread" then
     	if matches[2] == "on" then
@@ -197,7 +197,7 @@ local function run(msg,matches)
     	unblock_user("user#id"..matches[2],ok_cb,false)
     	return "User unblocked"
     end
-    if matches[1] == "import" then--join by group link
+    if matches[1] == "بروتوش" then--join by group link
     	local hash = parsed_url(matches[2])
     	import_chat_link(hash,ok_cb,false)
     end
@@ -307,7 +307,7 @@ end
 return {
   patterns = {
 	"^(pm) (%d+) (.*)$",
-	"^(import) (.*)$",
+	"^(بروتوش) (.*)$",
 	"^(pmunblock) (%d+)$",
 	"^(pmblock) (%d+)$",
 	"^(markread) (on)$",

@@ -21,7 +21,7 @@ local function run(msg,matches)
    local name = matches[2]
       if matches[1] == "ذخیره" and matches[2] and is_sudo(msg) then
 load_document(msg.reply_id, saveplug, {msg=msg,name=name})
-        return '<code>پلاگین '..name..'ب موفقیت ذخیر شد</code>'
+        return '<code>پلاگین '..name..'با موفقیت ذخیر شد</code>'
     end
 end
 end
